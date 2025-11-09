@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simulador de Aurora</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="simulationCanvas"></canvas> 
+    
+    <div class="controls"> 
+        <button id="startButton">Partícula</button>
+    </div>
+
+    <div class="explanation-interface">
+        <div id="avatar-area" class="avatar-area">
+            
+            <div class="avatar-head">
+                <div class="avatar-mouth"></div>   
+            </div>
+            
+            <div class="avatar-body"></div>
+
+            <div class="avatar-arm left">
+                <div class="avatar-glove"></div>
+            </div>
+            <div class="avatar-arm right">
+                <div class="avatar-glove"></div>
+            </div>
+            <div class="avatar-leg left">
+                <div class="avatar-boot"></div>
+            </div>
+            <div class="avatar-leg right">
+                <div class="avatar-boot"></div>
+            </div>
+        </div>
+        
+        <div class="explanation-card">
+            <h2 id="topic-title"></h2>
+            <p id="explanation-text" class="explanation-content"></p>
+            <div class="navigation-controls">
+                <button id="prev-btn" class="nav-button">Anterior</button>
+                <span id="step-counter"></span>
+                <button id="next-btn" class="nav-button">Próximo</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,377 @@
+body {
+    background-color: #000;
+    color: white;
+    font-family: sans-serif;
+    margin: 0;
+    overflow: hidden;
+}
+
+canvas {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.controls {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+button {
+    font-size: 16px;
+    padding: 12px 20px;
+    margin-top: 10px;
+    background-color: rgba(40, 40, 40, 0.7);
+    color: white;
+    border: 1px solid #777;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    background-color: rgba(80, 80, 80, 0.9);
+}
+
+
+/* --- INÍCIO DOS ESTILOS DO AVATAR E CARTÃO --- */
+:root {
+    --primary-color: #00bcd4;
+    --secondary-color: #3f51b5;
+    --card-bg: rgba(30, 30, 60, 0.9);
+    --text-dark: #e0f2f7;
+    --text-light: #f0f0f0;
+    
+    --avatar-suit: #e0e0e0;
+    --avatar-visor: #2a3b4c;
+    --avatar-visor-glow: #87ceeb;
+    --avatar-accent: #ffeb3b;
+    --avatar-trim: #424242;
+}
+
+.explanation-interface {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    max-width: 90vw;
+    z-index: 5;
+
+    /* --- MUDANÇA: Reduz o tamanho de tudo em 15% --- */
+    transform: scale(0.85);
+    /* --- MUDANÇA: Garante que ele encolha para o canto, e não para o centro --- */
+    transform-origin: bottom right;
+}
+
+.explanation-card {
+    background-color: var(--card-bg);
+    color: var(--text-dark);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    width: 450px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    backdrop-filter: blur(5px);
+}
+
+.explanation-card h2 {
+    font-size: 1.4rem;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+.explanation-card p.explanation-content {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin: 0;
+    min-height: 80px;
+}
+
+.explanation-card p.explanation-content .highlight {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: var(--avatar-accent);
+    display: block;
+    margin: 10px 0;
+}
+
+.navigation-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 15px;
+}
+
+.nav-button {
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: 2px solid var(--primary-color);
+    background-color: transparent;
+    color: var(--primary-color);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.nav-button:hover:not(:disabled) {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.nav-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* --- ESTILOS DO AVATAR DE ASTRONAUTA --- */
+
+.avatar-area {
+    width: 150px; 
+    height: 250px; 
+    position: relative;
+    animation: float 6s ease-in-out infinite;
+}
+
+/* Capacete */
+.avatar-head {
+    width: 100px;
+    height: 100px;
+    background: var(--avatar-suit);
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid var(--avatar-trim);
+    overflow: hidden;
+    z-index: 2;
+    top: 0; 
+}
+
+/* Visor redondo */
+.avatar-head::before {
+    content: '';
+    position: absolute;
+    top: 25px;
+    left: 15px;
+    width: 70px;
+    height: 60px;
+    background: var(--avatar-visor);
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.7);
+    z-index: 3;
+}
+
+/* Reflexo no visor */
+.avatar-head::after {
+    content: '';
+    position: absolute;
+    top: 35px;
+    left: 25px;
+    width: 25px;
+    height: 15px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    transform: rotate(-20deg);
+    filter: blur(2px);
+    z-index: 4;
+}
+
+.avatar-eye { display: none; }
+
+/* Boca (painel de controle no capacete) */
+.avatar-mouth {
+    width: 25px;
+    height: 15px;
+    background: var(--secondary-color);
+    border-radius: 5px;
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 2px solid var(--avatar-trim);
+    z-index: 5;
+}
+
+/* Corpo do astronauta */
+.avatar-body {
+    width: 100px; 
+    height: 110px; 
+    background: var(--avatar-suit);
+    position: absolute;
+    bottom: 60px; 
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 30px 30px 15px 15px; 
+    border: 4px solid var(--avatar-trim);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+    z-index: 1; 
+    top: 80px; 
+}
+
+/* Detalhes no corpo (cinto e botão) */
+.avatar-body::before { /* Cinto */
+    content: '';
+    position: absolute;
+    width: 80%;
+    height: 15px;
+    background: var(--avatar-trim);
+    top: 30px;
+    left: 10%;
+    border-radius: 5px;
+}
+.avatar-body::after { /* Botão central */
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: var(--avatar-accent);
+    border-radius: 50%;
+    top: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 0 5px var(--avatar-accent);
+}
+
+/* --- BRAÇOS E PERNAS --- */
+.avatar-arm {
+    width: 30px;
+    height: 70px;
+    background: var(--avatar-suit);
+    border: 3px solid var(--avatar-trim);
+    border-radius: 15px;
+    position: absolute;
+    z-index: 0;
+    top: 100px; 
+    animation: arm-float 3s ease-in-out infinite alternate; 
+}
+.avatar-arm.left {
+    left: 10px; 
+    transform-origin: top center;
+    transform: rotate(10deg); 
+}
+.avatar-arm.right {
+    right: 10px; 
+    transform-origin: top center;
+    transform: rotate(-10deg); 
+}
+
+.avatar-glove {
+    width: 35px;
+    height: 35px;
+    background: var(--avatar-trim);
+    border-radius: 50%;
+    position: absolute;
+    bottom: -10px; 
+    left: 50%;
+    transform: translateX(-50%);
+    border: 2px solid var(--secondary-color);
+}
+
+/* Pernas */
+.avatar-leg {
+    width: 35px;
+    height: 80px;
+    background: var(--avatar-suit);
+    border: 3px solid var(--avatar-trim);
+    border-radius: 15px;
+    position: absolute;
+    z-index: 0;
+    bottom: 0; 
+    animation: leg-float 4s ease-in-out infinite alternate;
+}
+.avatar-leg.left {
+    left: 40px; 
+    transform-origin: top center;
+    transform: rotate(5deg);
+}
+.avatar-leg.right {
+    right: 40px; 
+    transform-origin: top center;
+    transform: rotate(-5deg);
+}
+
+.avatar-boot {
+    width: 45px;
+    height: 25px;
+    background: var(--avatar-trim);
+    border-radius: 10px 10px 5px 5px;
+    position: absolute;
+    bottom: -5px; 
+    left: 50%;
+    transform: translateX(-50%);
+    border: 2px solid var(--secondary-color);
+}
+
+
+/* Animações */
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes arm-float {
+    0%, 100% { transform: rotate(10deg); }
+    50% { transform: rotate(-10deg); }
+}
+.avatar-arm.right { animation: arm-float-right 3s ease-in-out infinite alternate; }
+@keyframes arm-float-right {
+    0%, 100% { transform: rotate(-10deg); }
+    50% { transform: rotate(10deg); }
+}
+
+
+@keyframes leg-float {
+    0%, 100% { transform: rotate(5deg); }
+    50% { transform: rotate(-5deg); }
+}
+.avatar-leg.right { animation: leg-float-right 4s ease-in-out infinite alternate; }
+@keyframes leg-float-right {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+
+
+.avatar-area.talking .avatar-mouth {
+    animation: talk-astronaut 0.5s infinite;
+}
+
+@keyframes talk-astronaut {
+    0% { height: 15px; }
+    50% { height: 20px; background: var(--primary-color); box-shadow: 0 0 5px var(--primary-color); }
+    100% { height: 15px; }
+}
+
+@media (max-width: 768px) {
+    .explanation-interface {
+        flex-direction: column-reverse;
+        align-items: center;
+        bottom: 10px;
+        right: 0;
+        left: 0;
+        width: 100%;
+    }
+    .explanation-card {
+        width: 85%;
+        padding: 15px;
+    }
+    .avatar-area {
+        transform: scale(0.7);
+        height: 220px; 
+    }
+    @keyframes float {
+        0%, 100% { transform: translateY(0) scale(0.7); }
+        50% { transform: translateY(-10px) scale(0.7); }
+    }
+}
+/* --- FIM DOS ESTILOS DO AVATAR --- */
